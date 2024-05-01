@@ -9,7 +9,7 @@ module gigocard::gigocard {
     use sui::sui::SUI;
     use sui::event;
 
-    //errors
+    // errors
     const NOT_THE_OWNER: u64 = 0;
 
     // gigo monster card
@@ -54,7 +54,7 @@ module gigocard::gigocard {
         transfer::public_transfer(gigo_card, sender);
     }
 
-    //set ready_to_fight
+    // set ready_to_fight
     public fun ready_to_fight(gigocard: &mut GigoCard, ready_to_fight: bool) {
         gigocard.ready_to_fight = ready_to_fight;
     }
