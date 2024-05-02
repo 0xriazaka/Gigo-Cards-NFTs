@@ -55,7 +55,7 @@ module gigocard::gigocard {
     }
 
     // transfer gigocard
-    public fun transfer_gigocard (
+    public entry fun transfer_gigocard (
         gigocard: GigoCard, 
         recipient: address, 
         _: &mut TxContext
@@ -64,7 +64,7 @@ module gigocard::gigocard {
     }
 
     // set ready_to_fight
-    public fun ready_to_fight (
+    public entry fun ready_to_fight (
         gigocard: &mut GigoCard,
         ready_to_fight: bool
     ) {
@@ -73,7 +73,7 @@ module gigocard::gigocard {
 
     // delete gigo card
 
-    public fun destroy (
+    public entry fun destroy (
         gigocard: GigoCard, 
         ctx: &mut TxContext
     ) {
