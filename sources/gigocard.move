@@ -72,7 +72,6 @@ module gigocard::gigocard {
     }
 
     // delete gigo card
-
     public entry fun destroy (
         gigocard: GigoCard, 
         ctx: &mut TxContext
