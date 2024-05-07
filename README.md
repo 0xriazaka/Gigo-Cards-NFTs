@@ -1,1 +1,1 @@
-# gigocard-NFT
+# NFT-Gigo-Cards
