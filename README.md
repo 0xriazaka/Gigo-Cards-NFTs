@@ -1,1 +1,1 @@
-# NFT-Gigo-Cards
+# Gigo Cards NFTs
