@@ -1,21 +1,11 @@
 
 module gigocard::gigocard {
-    use std::option:: {Self, Option};
-    use std::string:: {Self, String};
-    use sui::transfer;
-    use sui::object:: {Self, UID, ID};
-    use sui::tx_context:: {Self, TxContext};
-    use sui::coin:: {Self, Coin};
-    use sui::sui::SUI;
+    use std::string::String;
     use sui::event;
 
-    // errors
-    const NOT_THE_OWNER: u64 = 0;
-
     // gigo monster card
-    struct GigoCard has key, store {
+    public struct GigoCard has key, store {
         id: UID,
-        owner: address,
         monster: String,
         role: String,
         region: String,
@@ -23,48 +13,42 @@ module gigocard::gigocard {
     }
 
     // events
-    struct GigoCardCreated has copy, drop {
+    public struct GigoCardCreated has copy, drop {
         monster_id: ID,
-        owner: address,
+        minted_by: address,
     }
 
     // mint gigo card
     public fun mint_gigocard (
         ctx: &mut TxContext,
-        monster: vector<u8>,
-        role: vector<u8>,
-        region: vector<u8>,
-        ready_to_fight: bool,    
-    ) {
+        monster: String,
+        role: String,
+        region: String,
+        _ready_to_fight: bool,    
+    ): GigoCard {
         let sender = tx_context::sender(ctx);
         let gigocard = GigoCard {
             id: object::new(ctx),
-            owner: sender,
-            monster: string::utf8(monster),
-            role: string::utf8(role),
-            region: string::utf8(region),
+            monster: monster,
+            role: role,
+            region: region,
             ready_to_fight: true, 
         };
 
         event::emit(GigoCardCreated {
             monster_id: object::id(&gigocard),
-            owner: sender,
+            minted_by: sender,
         });
-
-        transfer::public_transfer(gigocard, sender);
+        gigocard
     }
 
     // transfer gigocard
-    public entry fun transfer_gigocard (
-        gigocard: GigoCard, 
-        recipient: address, 
-        _: &mut TxContext
-    ) {
+    public entry fun transfer_gigocard ( gigocard: GigoCard, recipient: address, _: &mut TxContext) {
         transfer::public_transfer(gigocard, recipient)
     }
 
     // set ready_to_fight
-    public entry fun ready_to_fight (
+    public entry fun set_ready_to_fight (
         gigocard: &mut GigoCard,
         ready_to_fight: bool
     ) {
@@ -74,11 +58,15 @@ module gigocard::gigocard {
     // delete gigo card
     public entry fun destroy (
         gigocard: GigoCard, 
-        ctx: &mut TxContext
+        _: &mut TxContext
     ) {
-        assert!(gigocard.owner == tx_context::sender(ctx), 0);
-        let GigoCard { id, owner: _, monster: _, role: _, region: _, ready_to_fight: _ } = gigocard;
+        let GigoCard { id, monster: _, role: _, region: _, ready_to_fight: _ } = gigocard;
         object::delete(id)
+    }
+
+    // helper functions
+    public fun ready_to_fight(gigocard: &GigoCard) : bool {
+        gigocard.ready_to_fight
     }
 }
 
