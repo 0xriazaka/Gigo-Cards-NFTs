@@ -10,7 +10,7 @@ module test::test_gigocard {
 
     // Test
     #[test]
-    fun test_mint() {
+    fun test_gigocard() {
 
         // Test Mint
         let mut scenario_val = test_scenario::begin(USER1);
