@@ -1,4 +1,4 @@
-# Gigo Cards SUI NFT Example
+# Gigo Cards SUI NFTs Example
 
 A pioneering example of SUI NFTs
 
