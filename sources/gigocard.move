@@ -64,7 +64,8 @@ module gigocard::gigocard {
         object::delete(id)
     }
 
-    // helper functions
+    // test functions
+    #[test_only]
     public fun ready_to_fight(gigocard: &GigoCard) : bool {
         gigocard.ready_to_fight
     }
